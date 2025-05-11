@@ -103,11 +103,10 @@ def main(page: ft.Page):
                         cur.execute('DELETE FROM software_option_on WHERE software_option = ? AND software_on_option = ?', (option.value, off_list[i]))
                     elif ms.value == "2":
                         cur.execute('DELETE FROM mechanic_option_on WHERE mechanic_option = ? AND mechanic_on_option = ?', (option.value, off_list[i]))
-
+                on_list.clear()
+                off_list.clear()
                 conn.commit()
                 page.update()
-            on_list.clear()
-            off_list.clear()
             if ms.value == "1":
                 cur.execute('SELECT * FROM software_option_on')
                 onoption = cur.fetchall()

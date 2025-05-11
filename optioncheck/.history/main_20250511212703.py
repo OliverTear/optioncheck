@@ -84,14 +84,12 @@ def main(page: ft.Page):
         )
     
     def page1_view():
-        global on_rows
         def read_option(e):
+            global on_list, off_list, on_rows
             conn = sqlite3.connect(dbname)
             cur = conn.cursor()
             
             if e.control.text == "Save":
-                on_rows.clear()
-
                 print(on_list)
                 for i in range(len(on_list)):
                     if ms.value == "1":
@@ -103,11 +101,8 @@ def main(page: ft.Page):
                         cur.execute('DELETE FROM software_option_on WHERE software_option = ? AND software_on_option = ?', (option.value, off_list[i]))
                     elif ms.value == "2":
                         cur.execute('DELETE FROM mechanic_option_on WHERE mechanic_option = ? AND mechanic_on_option = ?', (option.value, off_list[i]))
-
                 conn.commit()
                 page.update()
-            on_list.clear()
-            off_list.clear()
             if ms.value == "1":
                 cur.execute('SELECT * FROM software_option_on')
                 onoption = cur.fetchall()
@@ -118,7 +113,9 @@ def main(page: ft.Page):
                 onoption = cur.fetchall()
                 cur.execute('SELECT * FROM mechanic_option_off')
                 offoption = cur.fetchall()
-
+            on_list = []
+            off_list = []
+            on_rows = []
             for i in range(len(onoption)):
                 on_list.append(onoption[i][2])
             for i in range(len(offoption)):
@@ -138,8 +135,9 @@ def main(page: ft.Page):
                     on__cells = [ft.DataCell(ft.Text(value="Option"+str(i+1))), ft.DataCell(ft.Text(value="Option" + str(i+1)))]
                     on_rows.append(ft.DataRow(cells=on__cells))
             page.update()
+        on_list = []
+        off_list = []
         def on_option(e):
-
             data = e.control.data
             if e.control.selected:
                 e.control.selected = False
@@ -154,8 +152,6 @@ def main(page: ft.Page):
             page.update()
 
         global setting
-        on_list = []
-        off_list = []
         option = ft.TextField(
             label="条件",
             value="",
