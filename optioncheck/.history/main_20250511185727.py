@@ -15,8 +15,6 @@ def main(page: ft.Page):
 
     def navigate_to(page_name):
         global setting
-        conn = sqlite3.connect(dbname)
-        cur = conn.cursor()
         cur.execute('SELECT * FROM setting')
         setting = cur.fetchall()
 
@@ -85,46 +83,30 @@ def main(page: ft.Page):
     
     def page1_view():
         def read_option(e):
-            conn = sqlite3.connect(dbname)
-            cur = conn.cursor()
-            if e.control.text == "Read":
-                if ms.value == "1":
-                    cur.execute('SELECT * FROM software_option_on')
-                    onoption = cur.fetchall()
-                    cur.execute('SELECT * FROM software_option_off')
-                    offoption = cur.fetchall()
-                elif ms.value == "2":
-                    cur.execute('SELECT * FROM mechanic_option_on')
-                    onoption = cur.fetchall()
-                    cur.execute('SELECT * FROM mechanic_option_off')
-                    offoption = cur.fetchall()
-                print(onoption)
-                print(offoption)
-                for i in range(setting[0][0]):
-                    chip = ft.Chip(
-                        label=ft.Text("Option" + str(i+1)),
-                        selected_color= ft.Colors.AMBER,
-                        data = i+1,
-                        selected = False,
-                        on_click=lambda e: on_option(e),
-                        width=300,
-                    )
-                    cells = [ft.DataCell(chip), ft.DataCell(ft.Text(value="Option" + str(i),))]
-                    rows.append(ft.DataRow(cells=cells))
-                    data_table = ft.DataTable(columns=header, rows=rows)
-                    page.update()
-            elif e.control.text == "Save":
-                for i in range(len(on_list)):
-                    if ms.value == "1":
-                        cur.execute('INSERT INTO software_option_on (software_option, software_on_option) VALUES (?, ?)', (option.value, on_list[i]))
-                    elif ms.value == "2":
-                        cur.execute('INSERT INTO mechanic_option_on (mechanic_option, mechanic_on_option) VALUES (?, ?)', (option.value, on_list[i]))
-                for i in range(len(off_list)):
-                    if ms.value == "1":
-                        cur.execute('DELETE FROM software_option_on WHERE software_option = ? AND software_on_option = ?', (option.value, off_list[i]))
-                    elif ms.value == "2":
-                        cur.execute('DELETE FROM mechanic_option_on WHERE mechanic_option = ? AND mechanic_on_option = ?', (option.value, off_list[i]))
-                conn.commit()
+            if ms.value == "1":
+                cur.execute('SELECT * FROM software_option_on')
+                onoption = cur.fetchall()
+                cur.execute('SELECT * FROM software_option_off')
+                offoption = cur.fetchall()
+            elif ms.value == "2":
+                cur.execute('SELECT * FROM mechanic_option_on')
+                onoption = cur.fetchall()
+                cur.execute('SELECT * FROM mechanic_option_off')
+                offoption = cur.fetchall()
+            print(onoption)
+            print(offoption)
+            for i in range(setting[0][0]):
+                chip = ft.Chip(
+                    label=ft.Text("Option" + str(i+1)),
+                    selected_color= ft.Colors.AMBER,
+                    data = i+1,
+                    selected = False,
+                    on_click=lambda e: on_option(e),
+                    width=300,
+                )
+                cells = [ft.DataCell(chip), ft.DataCell(ft.Text(value="Option" + str(i),))]
+                rows.append(ft.DataRow(cells=cells))
+                data_table = ft.DataTable(columns=header, rows=rows)
                 page.update()
         on_list = []
         off_list = []
@@ -160,7 +142,18 @@ def main(page: ft.Page):
             print("on",on_list)
             print(off_list)
         def save_option(e):
-            pass
+            for i in range(len(on_list)):
+                if ms.value == "1":
+                    cur.execute('INSERT INTO software_option_on (software_option, software_on_option) VALUES (?, ?)', (option.value, on_list[i]))
+                elif ms.value == "2":
+                    cur.execute('INSERT INTO mechanic_option_on (mechanic_option, mechanic_on_option) VALUES (?, ?)', (option.value, on_list[i]))
+            for i in range(len(off_list)):
+                if ms.value == "1":
+                    cur.execute('INSERT INTO software_option_off (software_option, software_off_option) VALUES (?, ?)', (option.value, off_list[i]))
+                elif ms.value == "2":
+                    cur.execute('INSERT INTO mechanic_option_off (mechanic_option, mechanic_off_option) VALUES (?, ?)', (option.value, off_list[i]))
+
+
 
         global setting
         option = ft.TextField(
@@ -200,7 +193,7 @@ def main(page: ft.Page):
                                 option,
                                 ms,
                                 ft.ElevatedButton("Read", on_click=lambda e: read_option(e)),
-                                ft.ElevatedButton("Save", on_click=lambda e: read_option(e)),
+                                ft.ElevatedButton("Save", on_click=lambda _: navigate_to("home")),
                                 ft.Column(
                                     controls=[data_table],
                                     scroll=ft.ScrollMode.ALWAYS,

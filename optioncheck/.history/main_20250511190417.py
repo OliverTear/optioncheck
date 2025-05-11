@@ -15,8 +15,6 @@ def main(page: ft.Page):
 
     def navigate_to(page_name):
         global setting
-        conn = sqlite3.connect(dbname)
-        cur = conn.cursor()
         cur.execute('SELECT * FROM setting')
         setting = cur.fetchall()
 
@@ -85,8 +83,6 @@ def main(page: ft.Page):
     
     def page1_view():
         def read_option(e):
-            conn = sqlite3.connect(dbname)
-            cur = conn.cursor()
             if e.control.text == "Read":
                 if ms.value == "1":
                     cur.execute('SELECT * FROM software_option_on')
@@ -114,18 +110,6 @@ def main(page: ft.Page):
                     data_table = ft.DataTable(columns=header, rows=rows)
                     page.update()
             elif e.control.text == "Save":
-                for i in range(len(on_list)):
-                    if ms.value == "1":
-                        cur.execute('INSERT INTO software_option_on (software_option, software_on_option) VALUES (?, ?)', (option.value, on_list[i]))
-                    elif ms.value == "2":
-                        cur.execute('INSERT INTO mechanic_option_on (mechanic_option, mechanic_on_option) VALUES (?, ?)', (option.value, on_list[i]))
-                for i in range(len(off_list)):
-                    if ms.value == "1":
-                        cur.execute('DELETE FROM software_option_on WHERE software_option = ? AND software_on_option = ?', (option.value, off_list[i]))
-                    elif ms.value == "2":
-                        cur.execute('DELETE FROM mechanic_option_on WHERE mechanic_option = ? AND mechanic_on_option = ?', (option.value, off_list[i]))
-                conn.commit()
-                page.update()
         on_list = []
         off_list = []
         def on_option(e):
@@ -161,6 +145,8 @@ def main(page: ft.Page):
             print(off_list)
         def save_option(e):
             pass
+
+
 
         global setting
         option = ft.TextField(

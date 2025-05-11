@@ -15,8 +15,6 @@ def main(page: ft.Page):
 
     def navigate_to(page_name):
         global setting
-        conn = sqlite3.connect(dbname)
-        cur = conn.cursor()
         cur.execute('SELECT * FROM setting')
         setting = cur.fetchall()
 

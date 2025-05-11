@@ -15,8 +15,6 @@ def main(page: ft.Page):
 
     def navigate_to(page_name):
         global setting
-        conn = sqlite3.connect(dbname)
-        cur = conn.cursor()
         cur.execute('SELECT * FROM setting')
         setting = cur.fetchall()
 
@@ -85,8 +83,6 @@ def main(page: ft.Page):
     
     def page1_view():
         def read_option(e):
-            conn = sqlite3.connect(dbname)
-            cur = conn.cursor()
             if e.control.text == "Read":
                 if ms.value == "1":
                     cur.execute('SELECT * FROM software_option_on')
