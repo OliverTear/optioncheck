@@ -11,12 +11,12 @@ def main(page: ft.Page):
         if page_name == "home":
             page.views.clear()
             page.views.append(home_view())
-        elif page_name == "page1":
+        elif page_name == "make_optioncode":
             page.views.clear()
-            page.views.append(page1_view())
-        elif page_name == "page2":
+            page.views.append(make_optioncode_view())
+        elif page_name == "edit_optioncode":
             page.views.clear()
-            page.views.append(page2_view())
+            page.views.append(edit_optioncode_view())
         elif page_name == "page3":
             page.views.clear()
             page.views.append(page3_view())
@@ -40,48 +40,28 @@ def main(page: ft.Page):
                 title=ft.Text("Home"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
-                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
-                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
+                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("make_optioncode")),
+                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("edit_optioncode")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
                     ft.IconButton(ft.Icons.LOOKS_4, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
                 ft.Text("Welcome to the Home Page!", size=30),
-                ft.Row(
-                    controls=[
-                        ft.Column(
-                            controls=[
-                                ft.Text("製作明細表", size=30),
-                                SpecificationPath,
-                            ],
-                            expand=True
-                        ),
-                        ft.Column(
-                            controls=[
-                                ft.Text("System SCS", size=30),
-                                SCSpath,
-                            ],
-                            expand=True
-                        ),
-                    ],
-                    scroll=ft.ScrollMode.ALWAYS,
-                    expand=True
-                ),
             ],
         )
     
-    def page1_view():
+    def make_optioncode_view():
 
         
         return ft.View(
-            "/page1",
+            "/make_optioncode",
             appbar=ft.AppBar(
                 title=ft.Text("OptionCode.dat Maker"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
-                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
-                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
+                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("make_optioncode")),
+                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("edit_optioncode")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
                     ft.IconButton(ft.Icons.LOOKS_4, on_click=lambda _: navigate_to("page4")),
                 ],
@@ -91,7 +71,7 @@ def main(page: ft.Page):
             ],
         )
 
-    def page2_view():
+    def edit_optioncode_view():
         def on_option(e):
             pass
 
@@ -131,13 +111,13 @@ def main(page: ft.Page):
         savebotton = ft.Button("保存", on_click = lambda e : print("保存"))
 
         return ft.View(
-            "/page2",
+            "/edit_optioncode",
             appbar=ft.AppBar(
                 title=ft.Text("Page 2"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
-                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
-                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
+                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("make_optioncode")),
+                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("edit_optioncode")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
                     ft.IconButton(ft.Icons.LOOKS_4, on_click=lambda _: navigate_to("page4")),
                 ],
@@ -199,8 +179,8 @@ def main(page: ft.Page):
                 title=ft.Text("Page 3"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
-                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
-                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
+                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("make_optioncode")),
+                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("edit_optioncode")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
                     ft.IconButton(ft.Icons.LOOKS_4, on_click=lambda _: navigate_to("page4")),
                 ],
@@ -230,8 +210,8 @@ def main(page: ft.Page):
                 title=ft.Text("Page 4"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
-                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
-                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
+                    ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("make_optioncode")),
+                    ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("edit_optioncode")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
                     ft.IconButton(ft.Icons.LOOKS_4, on_click=lambda _: navigate_to("page4")),
                 ],
