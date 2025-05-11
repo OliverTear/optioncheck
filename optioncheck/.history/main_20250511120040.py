@@ -10,13 +10,9 @@ def main(page: ft.Page):
     dbname = 'option.db'
     conn = sqlite3.connect(dbname)
     cur = conn.cursor()
-    setting = None
 
 
     def navigate_to(page_name):
-        global setting
-        cur.execute('SELECT * FROM setting')
-        setting = cur.fetchall()
 
         if page_name == "home":
             page.views.clear()
@@ -30,9 +26,9 @@ def main(page: ft.Page):
         elif page_name == "page3":
             page.views.clear()
             page.views.append(page3_view())
-        elif page_name == "setting":
+        elif page_name == "page4":
             page.views.clear()
-            page.views.append(setting_view())
+            page.views.append(page4_view())
         page.update()
 
     def home_view():
@@ -53,7 +49,7 @@ def main(page: ft.Page):
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
                     ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
-                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("setting")),
+                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
@@ -93,7 +89,7 @@ def main(page: ft.Page):
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
                     ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
-                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("setting")),
+                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
@@ -149,7 +145,7 @@ def main(page: ft.Page):
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
                     ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
-                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("setting")),
+                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
@@ -204,7 +200,7 @@ def main(page: ft.Page):
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
                     ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
-                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("setting")),
+                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
@@ -225,15 +221,16 @@ def main(page: ft.Page):
             ],
         )
 
-    def setting_view():
-        global setting
+    def page4_view():
+        cur.execute('SELECT * FROM setting')
+        print(cur.fetchall())
         optionnum = ft.TextField(
             label="オプションの上限値",
-            value=setting[0][0],
+            value="",
         )
         optionlistpath = ft.TextField(
             label="オプションリストのパス",
-            value=setting[0][1],
+            value="",
         )
         def save_setting(e):
             optionnum_value = optionnum.value
@@ -246,32 +243,19 @@ def main(page: ft.Page):
             conn.commit()
             page.update()
         return ft.View(
-            "/setting",
+            "/page4",
             appbar=ft.AppBar(
-                title=ft.Text("設定"),
+                title=ft.Text("Page 4"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
                     ft.IconButton(ft.Icons.EDIT_NOTE, on_click=lambda _: navigate_to("page2")),
                     ft.IconButton(ft.Icons.LOOKS_3, on_click=lambda _: navigate_to("page3")),
-                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("setting")),
+                    ft.IconButton(ft.Icons.SETTINGS_OUTLINED, on_click=lambda _: navigate_to("page4")),
                 ],
             ),
             controls=[
-                ft.Row(
-                    controls=[
-                        ft.Column(
-                            controls=[
-                                optionnum,
-                                optionlistpath,
-                                ft.ElevatedButton("Save", on_click=lambda e: save_setting(e)),
-                            ],
-                            expand=True
-                        ),
-                    ],
-                    scroll=ft.ScrollMode.ALWAYS,
-                    expand=True
-                ),
+                ft.Text("This is Page 4", size=30),
             ],
         )
 

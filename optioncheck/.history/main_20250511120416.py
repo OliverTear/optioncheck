@@ -248,7 +248,7 @@ def main(page: ft.Page):
         return ft.View(
             "/setting",
             appbar=ft.AppBar(
-                title=ft.Text("設定"),
+                title=ft.Text("Page 4"),
                 actions=[
                     ft.IconButton(ft.Icons.HOME, on_click=lambda _: navigate_to("home")),
                     ft.IconButton(ft.Icons.FIBER_NEW, on_click=lambda _: navigate_to("page1")),
@@ -258,6 +258,7 @@ def main(page: ft.Page):
                 ],
             ),
             controls=[
+                ft.Text("This is Page 4", size=30),
                 ft.Row(
                     controls=[
                         ft.Column(
